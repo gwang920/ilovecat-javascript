@@ -1,7 +1,7 @@
 import { setItem } from '../util/sessionStorage.js';
 
-export default class SearchBar {    
-    constructor({$target, keywords, onSearch, onRandom}) {
+export default class SearchBar {
+    constructor({ $target, keywords, onSearch, onRandom }) {
         this.recent = keywords;
         this.onSearch = onSearch;
         this.onRandom = onRandom;
@@ -11,7 +11,6 @@ export default class SearchBar {
         $target.appendChild(this.section);
 
         this.render();
-
         this.focusOnSearchBox();
     }
 
@@ -21,8 +20,8 @@ export default class SearchBar {
     }
 
     addRecentKeyword(keyword) {
-        if(this.recent.includes(keyword)) return;
-        if(this.recent.length == 5) this.recent.shift();
+        if (this.recent.includes(keyword)) return;
+        if (this.recent.length == 5) this.recent.shift();
 
         this.recent.push(keyword);
         setItem('keywords', this.recent);
@@ -31,13 +30,13 @@ export default class SearchBar {
     }
 
     searchByKeyword(keyword) {
-        if(keyword.length == 0) return;
+        if (keyword.length == 0) return;
 
         this.addRecentKeyword(keyword);
         this.onSearch(keyword);
     }
 
-    deleteKeyword(){
+    deleteKeyword() {
         const searchBox = document.querySelector('.search-box');
         searchBox.value = '';
     }
@@ -48,17 +47,20 @@ export default class SearchBar {
         const randomBtn = document.createElement('span');
         randomBtn.className = 'random-btn';
         randomBtn.innerText = '🐱';
-        
+
         const wrapper = document.createElement('div');
         wrapper.className = 'search-box-wrapper';
 
         const searchBox = document.createElement('input');
         searchBox.className = 'search-box';
         searchBox.placeholder = '고양이를 검색하세요.';
-        
+        /*
+            div blokc 속성, 블록 처럼 쌓인다.
+            span inline 속성, 횡렬로 다닥다닥 붙는다.
+        */
         const recentKeywords = document.createElement('div');
         recentKeywords.className = 'recent-keywords';
-        
+
         this.recent.map(keyword => {
             const link = document.createElement('span');
             link.className = 'keyword';
@@ -72,12 +74,12 @@ export default class SearchBar {
         randomBtn.addEventListener('click', this.onRandom);
         searchBox.addEventListener('focus', this.deleteKeyword);
         searchBox.addEventListener('keyup', event => {
-            if(event.keyCode == 13){
+            if (event.keyCode == 13) {
                 this.searchByKeyword(searchBox.value);
             }
         });
 
-    
+
         wrapper.appendChild(searchBox);
         wrapper.appendChild(recentKeywords);
         this.section.appendChild(randomBtn);

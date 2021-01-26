@@ -11,7 +11,13 @@ export default class App {
     constructor($target) {
         const keywords = getItem('keywords');
         const data = getItem('data');
-        
+
+        /*
+            onSearch 이벤트 호출 시
+            로딩 스피너 ON
+            데이터를 세팅한 후
+            로딩 스피너 OFF
+        */
         const searchingSection = new SearchingSection({
             $target,
             keywords,
@@ -19,7 +25,7 @@ export default class App {
                 loading.toggleSpinner();
 
                 const response = await api.fetchCats(keyword);
-                if(!response.isError){
+                if (!response.isError) {
                     setItem('data', response.data);
                     resultsSection.setState(response.data);
                     loading.toggleSpinner();
@@ -29,9 +35,9 @@ export default class App {
             },
             onRandom: async () => {
                 loading.toggleSpinner();
-                
+
                 const response = await api.fetchRandomCats();
-                if(!response.isError){
+                if (!response.isError) {
                     setItem('data', response.data);
                     resultsSection.setState(response.data);
                     loading.toggleSpinner();
@@ -51,7 +57,7 @@ export default class App {
                 loading.toggleSpinner();
 
                 const response = await api.fetchRandomCats();
-                if(!response.isError){
+                if (!response.isError) {
                     const beforeData = getItem('data');
                     const nextData = beforeData.concat(response.data);
 

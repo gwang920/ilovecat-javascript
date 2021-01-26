@@ -1,3 +1,6 @@
+/* 
+    css 변수 선언, 하이픈(-)을 두개 쓰고 변수명을 쓴 다음 콜론(:)을 붙이고 값을 입력 
+*/
 :root {
     --color-mode: 'light';
     --color-dark: black;
@@ -5,13 +8,18 @@
     --background: white;
     --text-color: black;
   }
-  
+/*
+  ease-in-out
+  정해진 시간 동안 요소의 속성값을 부드럽게 변화
+*/
   body {
     background: var(--background);
     color: var(--text-color);
     transition: background 500ms ease-in-out, color 200ms ease;
   }
-  
+/* 
+    미디어쿼리 
+*/
   @media (prefers-color-scheme: dark) {
     :root {
       --color-mode: 'dark';

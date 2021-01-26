@@ -1,6 +1,7 @@
 {
   "name": "ilovecat",
   "version": "1.0.0",
+  "type": "module",
   "description": "Programmers 2020 Dev-Matching",
   "main": "index.js",
   "scripts": {

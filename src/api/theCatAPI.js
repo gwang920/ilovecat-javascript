@@ -1,17 +1,21 @@
 /* eslint-disable no-useless-catch */
 const API_ENDPOINT = 'https://api.thecatapi.com/v1';
 
+/*
+    async await 패턴 url 요청
+    ref : https://developers.google.com/web/fundamentals/primers/async-functions?hl=ko
+*/
 const request = async url => {
     try {
         const response = await fetch(url);
-        if(response.ok) {
+        if (response.ok) {
             const data = await response.json();
             return data;
         } else {
             const errorData = await response.json();
             throw errorData;
         }
-    } catch(e) {
+    } catch (e) {
         throw {
             message: e.message,
             status: e.status
@@ -29,14 +33,26 @@ const api = {
             const requests = breeds.map(async breed => {
                 return await request(`${API_ENDPOINT}/images/search?limit=20&breed_ids=${breed.id}`);
             });
+
+            /*
+                await 문은 Promise가 fulfill되거나 reject 될 때까지 async 함수의 실행을 일시 정지하고, 
+                Promise가 fulfill되면 async 함수를 일시 정지한 부분부터 실행
+
+                모든 requests를 받겠다.
+            */
+
             const responses = await Promise.all(requests);
+
+            /*
+                배열에 담는다.
+            */
             const result = Array.prototype.concat.apply([], responses);
-            
+
             return {
                 isError: false,
                 data: result
             };
-        } catch(e) {
+        } catch (e) {
             return {
                 isError: true,
                 data: e
@@ -53,7 +69,7 @@ const api = {
                 isError: false,
                 data: result
             };
-        } catch(e) {
+        } catch (e) {
             return {
                 isError: true,
                 data: e

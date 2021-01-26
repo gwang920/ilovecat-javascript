@@ -1,5 +1,15 @@
+/*
+    아티클
+    고양이 정보
+
+    아티클
+        -> img
+        -> 아티클
+            -> 네임
+            -> 종
+*/
 export default class Card {
-    constructor({$target, data}) {
+    constructor({ $target, data }) {
         this.data = data;
         this.card = document.createElement('article');
         this.card.className = 'cat-card';
@@ -12,7 +22,7 @@ export default class Card {
 
     render() {
         const url = this.data.url;
-        const {name, origin} = this.data.breeds.length > 0 ? this.data.breeds[0] : { name: '정보없음', origin: '정보없음'};
+        const { name, origin } = this.data.breeds.length > 0 ? this.data.breeds[0] : { name: '정보없음', origin: '정보없음' };
 
         const cardImage = document.createElement('img');
         cardImage.className = 'card-image';

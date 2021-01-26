@@ -1,5 +1,5 @@
 export default class Loading {
-    constructor({$target}) {
+    constructor({ $target }) {
         this.spinnerWrapper = document.createElement('div');
         this.spinnerWrapper.className = 'spinner-wrapper';
         this.spinnerWrapper.classList.add('hidden');
@@ -9,6 +9,9 @@ export default class Loading {
         this.render();
     }
 
+    /*
+        toggle 현 생태 = > 반대 상태
+    */
     toggleSpinner() {
         const spinner = document.querySelector('.spinner-wrapper');
         spinner.classList.toggle('hidden');
