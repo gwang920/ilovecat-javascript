@@ -1,5 +1,9 @@
 import { throttling } from './throttle.js';
 
+/*
+    마지막 함수가 호출된 후 일정 시간이 지나기 전에 다시 호출되지 않도록 하는 것
+*/
+
 const throttler = throttling();
 
 function scrollFetch(fetchData) {
@@ -19,7 +23,7 @@ function getScrollTop() {
 function getDocumentHeight() {
     const body = document.body;
     const html = document.documentElement;
-    
+
     return Math.max(
         body.scrollHeight, body.offsetHeight,
         html.clientHeight, html.scrollHeight, html.offsetHeight

@@ -10,7 +10,7 @@ export default class Loading {
     }
 
     /*
-        toggle 현 생태 = > 반대 상태
+        toggle 현 상태 = > 반대 상태
     */
     toggleSpinner() {
         const spinner = document.querySelector('.spinner-wrapper');

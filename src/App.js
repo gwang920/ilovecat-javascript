@@ -1,45 +1,28 @@
-import SearchingSection from './components/SearchingSection.js';
-import ResultsSection from './components/ResultsSection.js';
+import SearchInput from "./components/SearchInput.js";
+import SearchResult from "./components/SearchResult.js";
+import Loading from "./components/Loading.js";
+import Error from "./components/Error.js";
 import DetailModal from './components/DetailModal.js';
-import Loading from './components/Loading.js';
-import Error from './components/Error.js';
 
-import { api } from './api/theCatAPI.js';
-import { getItem, setItem } from './util/sessionStorage.js';
+import { api } from "./api/api.js";
+import { getItem, setItem } from './utils/sessionStorage.js';
 
 export default class App {
+
     constructor($target) {
         const keywords = getItem('keywords');
         const data = getItem('data');
-
-        /*
-            onSearch 이벤트 호출 시
-            로딩 스피너 ON
-            데이터를 세팅한 후
-            로딩 스피너 OFF
-        */
-        const searchingSection = new SearchingSection({
+        console.log(data);
+        const searchInput = new SearchInput({
             $target,
             keywords,
             onSearch: async keyword => {
                 loading.toggleSpinner();
-
                 const response = await api.fetchCats(keyword);
-                if (!response.isError) {
-                    setItem('data', response.data);
-                    resultsSection.setState(response.data);
-                    loading.toggleSpinner();
-                } else {
-                    error.setState(response.data);
-                }
-            },
-            onRandom: async () => {
-                loading.toggleSpinner();
 
-                const response = await api.fetchRandomCats();
                 if (!response.isError) {
                     setItem('data', response.data);
-                    resultsSection.setState(response.data);
+                    searchResult.setState(response.data);
                     loading.toggleSpinner();
                 } else {
                     error.setState(response.data);
@@ -47,11 +30,18 @@ export default class App {
             }
         });
 
-        const resultsSection = new ResultsSection({
+        const searchResult = new SearchResult({
             $target,
-            data,
-            onClick: data => {
-                detailModal.setState(data);
+            initialData: data,
+            onClick: async id => {
+                loading.toggleSpinner();
+                const response = await api.fetchDetailcat(id);
+                if (!response.isError) {
+                    detailModal.setState(response);
+                    loading.toggleSpinner();
+                } else {
+                    error.setState(response.data);
+                }
             },
             onScroll: async () => {
                 loading.toggleSpinner();
@@ -62,7 +52,7 @@ export default class App {
                     const nextData = beforeData.concat(response.data);
 
                     setItem('data', nextData);
-                    resultsSection.setState(nextData);
+                    searchResult.setState(nextData);
                     loading.toggleSpinner();
                 } else {
                     error.setState(response.data);
@@ -70,15 +60,15 @@ export default class App {
             }
         });
 
-        const detailModal = new DetailModal({
-            $target
-        });
-
         const loading = new Loading({
             $target
         });
 
         const error = new Error({
+            $target
+        });
+
+        const detailModal = new DetailModal({
             $target
         });
 

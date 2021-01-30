@@ -20,7 +20,7 @@
 /* 
     미디어쿼리 
 */
-  @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
     :root {
       --color-mode: 'dark';
     }
@@ -223,3 +223,4 @@
     right: 5rem;
     z-index: 3;
 }
+
